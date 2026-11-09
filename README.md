@@ -6,6 +6,9 @@
 **Environment:** CPU-only inference. Pretrained models welcome; no training needed.
 **Tools:** Python + OpenCV / NumPy / FFmpeg, or anything equivalent you prefer.
 
+> **New here?** This page is the brief. [CANDIDATE_GUIDE.md](CANDIDATE_GUIDE.md) walks you
+> through setup, a suggested 2-hour plan, the metric, and the submission checklist.
+
 ---
 
 ## How we respect your time
@@ -15,9 +18,6 @@ full-time job or family. So:
 
 - **It's capped at 2 hours.** Do the first two hours and stop. We'd rather see two
   focused hours and an honest "here's what I'd do next" than a polished weekend project.
-- **Prefer to skip the take-home?** Tell us — we'll do a **60-minute live paired
-  session** instead, where we work through the same problem together. No disadvantage
-  either way; some of our strongest candidates choose this.
 - **AI assistants are fine.** We only ask that you can explain your choices in a short
   follow-up call.
 
@@ -175,7 +175,7 @@ We care more about how you reason about a messy problem than about a perfect res
 
 - The clips are for this assessment only — please don't publish or share them.
 - This is a hiring assessment, not production work.
-- After you submit (or do the live session), we'll have a short walkthrough to talk
+- After you submit, we'll have a short walkthrough to talk
   through your approach and where you'd take it next.
 
 Thanks for your time — we're genuinely looking forward to seeing how you think.
