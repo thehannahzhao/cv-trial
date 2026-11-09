@@ -7,7 +7,7 @@
 **Tools:** Python + OpenCV / NumPy / FFmpeg, or anything equivalent you prefer.
 
 > **New here?** This page is the brief. [CANDIDATE_GUIDE.md](CANDIDATE_GUIDE.md) walks you
-> through setup, a suggested 3-hour plan, the metric, and the submission checklist.
+> through setup, choosing a track, the metric, and the submission checklist.
 
 ---
 
@@ -16,7 +16,7 @@
 We know open-ended take-home work is a big ask. So:
 
 - **It's capped at 3 hours.** Setup doesn't count towards it.
-- **AI assistants are fine** — as long as you can explain your choices in the walkthrough.
+- **AI assistants are fine** — just make sure you understand everything you submit.
 
 ---
 
@@ -184,7 +184,5 @@ We care more about how you reason about a messy problem than about a perfect res
 
 - The clips are for this assessment only — please don't publish or share them.
 - This is a hiring assessment, not production work.
-- After you submit, we'll have a short walkthrough to talk
-  through your approach and where you'd take it next.
 
 Thanks for your time — we're genuinely looking forward to seeing how you think.
