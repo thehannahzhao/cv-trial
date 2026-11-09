@@ -1,25 +1,22 @@
 # elevenset — Computer Vision Technical Trial
 
 **Role:** Computer Vision / Applied ML Intern
-**Product:** elevenset — AI tennis coaching from phone videos
-**Time:** Please cap this at **2 hours**. We mean it — see "How we respect your time" below.
+**Product:** elevenset — An AI-powered tennis coaching platform using computer vision and multimodal AI to analyse player performance, generate highlights, and deliver personalised coaching feedback.
+**Time:** Please cap this at **3 hours**.
 **Environment:** CPU-only inference. Pretrained models welcome; no training needed.
 **Tools:** Python + OpenCV / NumPy / FFmpeg, or anything equivalent you prefer.
 
 > **New here?** This page is the brief. [CANDIDATE_GUIDE.md](CANDIDATE_GUIDE.md) walks you
-> through setup, a suggested 2-hour plan, the metric, and the submission checklist.
+> through setup, a suggested 3-hour plan, the metric, and the submission checklist.
 
 ---
 
 ## How we respect your time
 
-We know open-ended take-home work is a big ask — especially if you have a
-full-time job or family. So:
+We know open-ended take-home work is a big ask. So:
 
-- **It's capped at 2 hours.** Do the first two hours and stop. We'd rather see two
-  focused hours and an honest "here's what I'd do next" than a polished weekend project.
-- **AI assistants are fine.** We only ask that you can explain your choices in a short
-  follow-up call.
+- **It's capped at 3 hours.** Setup doesn't count towards it.
+- **AI assistants are fine** — as long as you can explain your choices in the walkthrough.
 
 ---
 
@@ -41,16 +38,26 @@ You'll receive:
 
 - **Two short clips** (~20–30s). In one, the target player is mostly alone. In the
   other, **other people are also on court** — the opponent and a passer-by.
-- **`targets.json`** — a bounding box marking the target player on the **first frame**
-  of each clip.
 - **`baseline.py`** — our current naïve approach: it centres the crop on whatever
   person it detects, with no notion of *which* person. It works on the easy clip and
   struggles on the crowded one.
+- **`make_targets.py`** — a small helper to mark the target player on the first frame.
 
-### Choose your track — same 2 hours either way
+### Who is the target?
+
+| Clip | Target player |
+|---|---|
+| `[clip_a]` | [e.g. near-side player, white shirt, starts on the left] |
+| `[clip_b]` | [e.g. far-side player, black cap, serving at the start] |
+
+Before you start, run `python make_targets.py` and draw a box around that player on
+frame 0 of each clip. It writes **`targets.json`** — the one input your tracker gets for
+*who* to follow. Include it in your submission.
+
+### Choose your track — same 3 hours either way
 
 - **Build track (default).** Make it work, measure it, note the cost — steps 1–3 below.
-- **Design track (optional).** Spend the same 2 hours on **problem definition and
+- **Design track (optional).** Spend the same 3 hours on **problem definition and
   experimental design** instead of a polished implementation. This is not extra work
   and not a lesser option — it's scored with a different emphasis (see the table under
   "What we're evaluating"). Pick it if you'd rather show how you frame a problem than
@@ -61,7 +68,7 @@ You can also blend the two — build less, design more. Just tell us which you l
 **Build track — do one thing well:**
 
 1. **Follow the right player.** Extend or replace the baseline so the 9:16 crop stays
-   on the target identified in `targets.json`, including on the clip with other people
+   on the target in `targets.json`, including on the clip with other people
    in frame. Handle the target briefly leaving frame or being occluded, in whatever
    way you think is reasonable.
 2. **Measure it — then argue with the measurement.** See "The metric" below. Report
@@ -79,7 +86,7 @@ You can also blend the two — build less, design more. Just tell us which you l
 4. *Optional:* one small experiment that tests a claim you make — e.g. run `baseline.py`,
    hand-check ten frames, and show one failure pattern on real footage.
 
-If two hours runs out before it all works, that's expected — submit what you have and
+If three hours runs out before it all works, that's expected — submit what you have and
 tell us what you'd try next. **We read that as a strong signal, not a failure.**
 
 ---
@@ -118,7 +125,8 @@ know the shape we mean:
 ```bash
 python3.12 -m venv .venv && source .venv/bin/activate   # Python 3.10–3.12
 pip install -r requirements.txt
-# put the two clips you were sent into clips/ (next to targets.json)
+# put the two clips you were sent into clips/
+python make_targets.py                                   # box the target on frame 0 of each clip
 python baseline.py clips/<clip>.mp4 out/<clip>_baseline.mp4 --log out/<clip>_baseline.json
 ```
 
@@ -142,6 +150,7 @@ A repo (or zip) with:
 
 **Build track**
 - Your code + one-command run instructions.
+- Your `targets.json`.
 - A 9:16 output for each clip.
 - Your metric results (numbers; a plot is a bonus), before vs after.
 - A short **README** (~half a page): what you did, what you measured and why,
