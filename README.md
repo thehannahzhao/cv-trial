@@ -47,22 +47,69 @@ You'll receive:
   person it detects, with no notion of *which* person. It works on the easy clip and
   struggles on the crowded one.
 
-**Do one thing well, in ~2 hours:**
+### Choose your track — same 2 hours either way
+
+- **Build track (default).** Make it work, measure it, note the cost — steps 1–3 below.
+- **Design track (optional).** Spend the same 2 hours on **problem definition and
+  experimental design** instead of a polished implementation. This is not extra work
+  and not a lesser option — it's scored with a different emphasis (see the table under
+  "What we're evaluating"). Pick it if you'd rather show how you frame a problem than
+  how fast you can ship one.
+
+You can also blend the two — build less, design more. Just tell us which you leaned towards.
+
+**Build track — do one thing well:**
 
 1. **Follow the right player.** Extend or replace the baseline so the 9:16 crop stays
    on the target identified in `targets.json`, including on the clip with other people
    in frame. Handle the target briefly leaving frame or being occluded, in whatever
    way you think is reasonable.
-2. **Measure it honestly.** Define at least one quantitative metric for "is the right
-   player well-framed?" (crop-centre error is a natural start; stability and
-   identity-correctness are good too). Report before vs after on both clips.
-   > Important: scoring your crop against *your own tracker's* boxes is circular — wrong
-   > tracking still scores perfectly. Tell us how you'd get an independent reference, and
-   > use one if you have time (even a few hand-checked frames counts).
+2. **Measure it — then argue with the measurement.** See "The metric" below. Report
+   it before (baseline) vs after on both clips, and tell us where it lies.
 3. **Note the cost.** Roughly how long does it run per minute of video, on what CPU?
+
+**Design track — a 1–2 page write-up covering:**
+
+1. **Problem definition.** What exactly does "follow the right player" mean? Which
+   failures matter most to someone watching the highlight (wrong person, late crop,
+   jitter, player cut off)? What's in scope, and what would you deliberately leave out?
+2. **Experimental design.** Which metrics, against what reference, and how you'd get
+   that reference cheaply. Which baselines and ablations. What result would change your mind.
+3. **The metric** (below) — its failure patterns are scored on this track too.
+4. *Optional:* one small experiment that tests a claim you make — e.g. run `baseline.py`,
+   hand-check ten frames, and show one failure pattern on real footage.
 
 If two hours runs out before it all works, that's expected — submit what you have and
 tell us what you'd try next. **We read that as a strong signal, not a failure.**
+
+---
+
+## The metric — a starting point worth challenging
+
+We'll give you a metric. It's deliberately simple, and it's deliberately flawed:
+
+> **Crop-centre error** — per frame, the horizontal distance between the centre of the
+> 9:16 crop and the centre of the target player's box, divided by the crop width.
+> 0 means perfectly centred; above 0.5 means the player's centre is outside the crop.
+> Report the mean over the clip.
+
+Use it, and don't trust it. **The thing we score here is the metric's failure patterns.**
+
+A **failure pattern** is a concrete situation where the metric and reality disagree:
+the metric gives a good score to an output a viewer would call bad, or a bad score to
+one a viewer would call good. A strong answer:
+
+1. **Names** at least one failure pattern — of this metric, or of one you propose instead.
+2. **Shows** it on the real clips — a timestamp, a frame, a number. Evidence beats argument.
+3. **Proposes** what to measure instead or alongside, and what that costs (labels, compute, complexity).
+
+One well-evidenced pattern beats a list of five guesses. Here's one for free, so you
+know the shape we mean:
+
+> **Circularity.** Score the crop against *your own tracker's* boxes and a tracker that
+> follows the wrong person still scores perfectly — the metric is checking the system
+> against itself. Tell us how you'd get an independent reference, and use one if you
+> have time (even a few hand-checked frames counts).
 
 ---
 
@@ -93,11 +140,17 @@ box's top-left corner and `w, h` its size:
 
 A repo (or zip) with:
 
+**Build track**
 - Your code + one-command run instructions.
 - A 9:16 output for each clip.
 - Your metric results (numbers; a plot is a bonus), before vs after.
 - A short **README** (~half a page): what you did, what you measured and why,
-  the CPU cost, what failed, and what you'd do with another day.
+  the metric's failure pattern(s) you found, the CPU cost, what failed, and what
+  you'd do with another day.
+
+**Design track**
+- Your 1–2 page write-up (Markdown or PDF).
+- Any code, frames or numbers behind your optional experiment.
 
 Please don't include the clips themselves in your submission.
 
@@ -105,13 +158,14 @@ Please don't include the clips themselves in your submission.
 
 ## What we're evaluating
 
-| Dimension | Weight |
-|---|---:|
-| Following the **correct** player, robustly | 30% |
-| Measurement — including not grading yourself | 30% |
-| CPU-cost awareness | 15% |
-| Code clarity & reproducibility | 15% |
-| Judgement & honest communication | 10% |
+| Dimension | Build track | Design track |
+|---|---:|---:|
+| Following the **correct** player, robustly | 30% | 10% |
+| **Metric failure patterns** — named, evidenced, with a better alternative | 25% | 30% |
+| Problem definition & experimental design | 10% | 35% |
+| CPU-cost awareness | 15% | 10% |
+| Code clarity & reproducibility | 10% | 5% |
+| Judgement & honest communication | 10% | 10% |
 
 We care more about how you reason about a messy problem than about a perfect result.
 
